@@ -36,6 +36,11 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_screenutil: ^5.9.3
   icons_launcher: ^3.0.3
+  http: ^1.6.0
+  dartz: ^0.10.1
+  flutter_bloc: ^9.1.1
+  carousel_slider: ^5.1.1
+  google_fonts: ^6.3.2
 
 dev_dependencies:
   flutter_test:
