@@ -7,8 +7,8 @@ class MoviesListApiDataSource implements MoviesListDataSource{
   APIService apiService;
   MoviesListApiDataSource({required this.apiService});
   @override
-  Future<Either<String, List<Movie>>> getMoviesList() {
-    return apiService.getMoviesList();
+  Future<Either<String, List<Movie>>> getMoviesList({int page=1,String genre="all",int limit=40}) {
+    return apiService.getMoviesList(page: page,genre: genre,limit: limit);
   }
 
 }

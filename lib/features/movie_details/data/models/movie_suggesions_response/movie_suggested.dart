@@ -1,7 +1,7 @@
 import 'Torrents.dart';
 
-class Movie {
-  Movie({
+class MovieSuggested {
+  MovieSuggested({
       this.id, 
       this.url, 
       this.imdbCode, 
@@ -28,7 +28,7 @@ class Movie {
       this.dateUploaded, 
       this.dateUploadedUnix,});
 
-  Movie.fromJson(dynamic json) {
+  MovieSuggested.fromJson(dynamic json) {
     id = json['id'];
     url = json['url'];
     imdbCode = json['imdb_code'];

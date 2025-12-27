@@ -7,8 +7,8 @@ class MoviesListRepositoryImpl implements MoviesRepository{
   MoviesListDataSource moviesListDataSource;
   MoviesListRepositoryImpl({required this.moviesListDataSource});
   @override
-  Future<Either<String, List<Movie>>> getMoviesList() {
-    return moviesListDataSource.getMoviesList();
+  Future<Either<String, List<Movie>>> getMoviesList({int page=1,String genre="all",int limit=40}) {
+    return moviesListDataSource.getMoviesList(page: page,genre: genre,limit: limit);
   }
 
 }

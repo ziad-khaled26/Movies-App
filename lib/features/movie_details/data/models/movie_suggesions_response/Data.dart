@@ -1,4 +1,6 @@
-import 'Movie.dart';
+import 'package:movies/features/mainLayout/home/data/models/movie.dart';
+
+import 'movie_suggested.dart';
 
 class Data {
   Data({

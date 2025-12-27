@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies/core/resources/assets_manager.dart';
 import 'package:movies/core/resources/colors_manager.dart';
+import 'package:movies/features/mainLayout/browse/presentation/browse_view_model/browse_view_model.dart';
 import 'package:movies/features/mainLayout/home/data/api/api_service.dart';
 import 'package:movies/features/mainLayout/home/data/data_sources/movies_category_based_api_data_source.dart';
 import 'package:movies/features/mainLayout/home/data/data_sources/movies_list_api_data_source.dart';
-import 'package:movies/features/mainLayout/home/data/repositories_impl/movies_category_based_repo_impl.dart';
 import 'package:movies/features/mainLayout/home/data/repositories_impl/movies_list_repository_impl.dart';
-import 'package:movies/features/mainLayout/home/presentation/movies_category_based_view_model/movies_category_based_view_model.dart';
 import 'package:movies/features/mainLayout/home/presentation/movies_list_view_model/movies_list_veiw_model.dart';
 import 'package:movies/features/mainLayout/home/presentation/screens/home.dart';
 import 'package:movies/features/mainLayout/home/repositories_interface/repository_interface.dart';
@@ -25,14 +24,15 @@ class MainLayout extends StatefulWidget {
 class _MainLayoutState extends State<MainLayout> {
   int selectedIndex = 0;
   List<Widget> tabs = [
-    BlocProvider(
-        create: (context)=>MoviesListViewModel(
-      moviesRepository:
-      MoviesListRepositoryImpl(moviesListDataSource: MoviesListApiDataSource(apiService: APIService())),
-    ),
-    child: HomeScreen()),
+
+    const HomeScreen(),
     SearchScreen(),
-    BrowseScreen(),
+    BlocProvider(
+      create:  (context)=>BrowseViewModel(
+        moviesRepository:MoviesListRepositoryImpl(moviesListDataSource: MoviesListApiDataSource(apiService: APIService())),
+          allMovies:context.read<MoviesListViewModel>().movies,categories: context.read<MoviesListViewModel>().categories)
+      ,child: BrowseScreen(),),
+        
     ProfileScreen(),
   ];
 

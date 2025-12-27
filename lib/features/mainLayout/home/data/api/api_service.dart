@@ -4,28 +4,34 @@ import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 import 'package:movies/features/mainLayout/home/data/models/Movies_list_response.dart';
 import 'package:movies/features/mainLayout/home/data/models/movie.dart';
-import 'package:movies/features/movie_details/data/models/movie_details_response/Movie.dart' as movie_details;
-import 'package:movies/features/movie_details/data/models/movie_details_response/Movie_details_response.dart';
-import 'package:movies/features/movie_details/data/models/movie_suggesions_response/Movie.dart'as movie_suggestions;
-import 'package:movies/features/movie_details/data/models/movie_suggesions_response/Movie_suggesion_response.dart';
+import 'package:movies/features/movie_details/data/models/movie_suggesions_response/movie_suggested.dart';
+
+import '../../../../movie_details/data/models/movie_details_response/Movie_details_response.dart';
+import '../../../../movie_details/data/models/movie_details_response/movie_details.dart';
+import '../../../../movie_details/data/models/movie_suggesions_response/Movie_suggesion_response.dart';
+
+
 class APIService{
   static const String baseUrl="yts.lt";
   static const String listMoviesEndPoint="/api/v2/list_movies.json";
   static const String movieDetailsEndPoint="/api/v2/movie_details.json";
   static const String movieSuggestionsEndPoint="/api/v2/movie_suggestions.json";
 
-  Future<Either<String,List<Movie>>> getMoviesList()async{
+  Future<Either<String,List<Movie>>> getMoviesList({int page=1,String genre="all",int limit=40})async{
     Uri url=Uri.https(
       baseUrl,
       listMoviesEndPoint,
         {
           "order_by":"desc",
-          "limit":"40"
+          "limit":limit.toString(),
+          "page":page.toString(),
+          "genre":genre
         }
 
     );
 
     http.Response listMoviesResponse=await http.get(url);
+
     var json=jsonDecode(listMoviesResponse.body);
     MoviesListResponse moviesListResponse=MoviesListResponse.fromJson(json);
     if(moviesListResponse.status=="error"){
@@ -37,14 +43,16 @@ class APIService{
   }
 
 
-  Future<Either<String,movie_details.Movie> >getMovieDetails(int movieId)async{
+  Future<Either<String,MovieDetails> >getMovieDetails(int movieId)async{
 
 
     Uri url=Uri.https(
         baseUrl,
-        listMoviesEndPoint,
+        movieDetailsEndPoint,
         {
-          "movie_id":movieId
+          "movie_id":movieId.toString(),
+          "with_images":true.toString(),
+          "with_cast":true.toString()
         }
 
     );
@@ -60,14 +68,14 @@ class APIService{
 
   }
 
-  Future<Either<String,List<movie_suggestions.Movie>> >getMovieSuggestions(int movieId)async{
+  Future<Either<String,List<Movie>> >getMovieSuggestions(int movieId)async{
 
 
     Uri url=Uri.https(
         baseUrl,
-        listMoviesEndPoint,
+        movieSuggestionsEndPoint,
         {
-          "movie_id":movieId
+          "movie_id":movieId.toString()
         }
 
     );

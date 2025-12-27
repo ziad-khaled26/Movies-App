@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:movies/features/movie_details/data/models//movie_details_response/Movie.dart';
-import 'package:movies/features/movie_details/data/models/movie_suggesions_response/Movie.dart'as movie_suggestions;
+import 'package:movies/features/mainLayout/home/data/models/movie.dart';
+import 'package:movies/features/movie_details/data/models/movie_details_response/movie_details.dart';
 
 abstract class MoviesDetailsRepositoryInterface{
-  Future<Either<String,Movie>> getMovieDetails(int movieId);
-  Future<Either<String,List<movie_suggestions.Movie>>> getMovieSuggestions(int movieId);
+  Future<Either<String,MovieDetails>> getMovieDetails(int movieId);
+  Future<Either<String,List<Movie>>> getMovieSuggestions(int movieId);
 
 }

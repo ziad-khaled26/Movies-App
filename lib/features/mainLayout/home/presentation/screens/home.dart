@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies/core/resources/assets_manager.dart';
 import 'package:movies/core/resources/navigate_to_movie_details.dart';
-import 'package:movies/features/mainLayout/home/presentation/movies_category_based_view_model/movies_category_based_view_model.dart';
 import 'package:movies/features/mainLayout/home/presentation/movies_list_view_model/movies_list_veiw_model.dart';
+import 'package:movies/features/mainLayout/home/presentation/widgets/home_three_section.dart';
 import 'package:movies/features/mainLayout/home/presentation/widgets/movie_item.dart';
 
 import '../../../../../core/resources/colors_manager.dart';
@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  ColorsManager.black.withOpacity(.80),
+                  ColorsManager.black.withOpacity(.30),
                   ColorsManager.black.withOpacity(.60),
                   ColorsManager.black,
                 ],
@@ -130,34 +130,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           return Text(state.errorMessage,style: TextStyle(color: ColorsManager.white),);
                         }
                         if(state is MoviesListLoadedSuccessfully){
-                          final allMovies=state.movies;
-                          final currentSection=state.sections;
-                          return Column(
-                            children: currentSection.map((sectionName){
-                              List<Movie> filteredMovie=allMovies.where((movie)=>(movie.genres?? []).contains(sectionName)).toList();
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(sectionName,style: TextStyle(fontSize: 16.sp,color: ColorsManager.white),),
-                                  SizedBox(height: 12.h,),
-                                  SizedBox(height: 220.h,
-                                    child: ListView.separated(
-                                      scrollDirection:Axis.horizontal,
 
-                                        itemBuilder: (context,index){
-                                          return ClipRRect(
-                                            borderRadius: BorderRadius.circular(20.r),
-                                            child: Image.network(filteredMovie[index].mediumCoverImage??""),
-                                          );
-                                        },
-                                        separatorBuilder: (context,index)=>SizedBox(width: 10.w,),
-                                        itemCount: filteredMovie.length),
-
-                                  )
-                                ],
-                              );
-                            }).toList()
-                          );
+                          return HomeThreeSection();
 
 
                         }
